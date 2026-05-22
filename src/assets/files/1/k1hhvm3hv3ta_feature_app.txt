@@ -1,0 +1,114 @@
+ 
+
+Shift Max 24 Hours.
+
+API : 
+
+	Frontend : 
+	
+		Casher Page : 
+			- Get by 
+				- Driver Id , 
+				- Datetime .
+
+			Data: 
+			- Vehicle 
+			- Driver :
+			- shift :
+				start on :
+				end on :
+			- stats : Trips , Revenue , visa amount ,  Cash Amount .
+
+			Action: 
+			Confirm Shift 
+
+			
+
+			
+	Mobile : 
+
+	- Shift ends time got from login API (schedule + cronjob each 30 mins ).
+	- Force Logout when shift ends . 
+	- Keep data to send GPS .
+	- Send Payment Method with trip end. 
+	
+
+	Backend :
+	login API : 
+		Check shift .
+			- open shift : accept 
+			- ended shift not confirmed : refuse 
+			- ended shift : confirm : accept .
+		Return : end shift time  .
+			-- Cash Amount : just end .
+			-- Only Visa : end and confirm . 
+	
+
+	Cron Job : End Shifts at time .
+	
+	Shift Details : 
+		filter : driver Id(Iqama) and Date: 
+		Data : 
+			- Vehicle 
+			- Driver :
+			- shift :
+				start on :
+				end on :
+			- stats : Trips , Revenue , visa amount ,  Cash Amount .
+	
+	Confirm Shift : 
+		Shift Id
+		Cash Amount : 
+
+	Store Payment Method in DB .
+		
+		
+		
+-----------------------------------------
+
+Trips Table
+
+ShiftTrips Table:
+	hiftId, tripId
+
+DriverShifts     
+	PK Id, driverId , status , startAt , endAt , confirmAt, Cash Amount .
+
+
+
+status  1-started ,2-ended ,3-confim)		
+		
+-------------------------------------------------------------------		
+           
+
+info : 
+
+	Company : 	
+		- name .
+		- logo 
+	Driver : 
+		- name 
+		- image.
+		- shift hours.
+	Shift :
+		start on 
+		end at .
+		Trips Count 
+		Total Revenue 
+		Total Cash Amount
+		
+		
+		
+		
+
+
+	
+
+
+
+
+
+
+
+
+

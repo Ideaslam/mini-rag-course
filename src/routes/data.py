@@ -23,17 +23,11 @@ async def upload_data(project_id:str,file:UploadFile,data_controller:DataControl
         if not is_valid:
             return JSONResponse(content={"signal": message}, status_code=status.HTTP_400_BAD_REQUEST)
 
-        project_dir_path = project_controller.get_project_path(project_id)
-        file_name=data_controller.generate_unique_filename(file.filename,project_id)
-        file_path = os.path.join(project_dir_path, file_name)
+        file_path, file_id=data_controller.generate_unique_filepath(file.filename,project_id)
         async with aiofiles.open(file_path, mode="wb") as f:
             while chunk := await file.read(data_controller.app_settings.FILE_DEFAULT_CHUNK_SIZE):
                 await f.write(chunk)
-
-        return JSONResponse(
-            content={"signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value},
-            status_code=status.HTTP_200_OK
-        )
+        return JSONResponse(content={"signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value, "file_id": file_id}, status_code=status.HTTP_200_OK)
     except Exception as e:
         logger.error(f"FILE_UPLOAD_ERROR: {str(e)}")
         return JSONResponse(

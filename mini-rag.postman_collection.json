@@ -1,0 +1,34 @@
+{
+  "info": {
+    "_postman_id": "50952dcf-5660-4dab-bddd-1f2226ec6f01",
+    "name": "mini-rag",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "4175027",
+    "_collection_link": "https://go.postman.co/collection/4175027-50952dcf-5660-4dab-bddd-1f2226ec6f01?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "welcome",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/welcome",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "welcome"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    }
+  ]
+}

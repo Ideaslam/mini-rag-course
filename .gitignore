@@ -159,5 +159,5 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-
-/assets/files/
+# Uploaded user files (keep other assets tracked)
+src/assets/files/

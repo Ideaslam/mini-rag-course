@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 load_dotenv()
 from routes import base,data
-from pymongo import MongoClient
+from pymongo import AsyncMongoClient
 from helpers.config import get_settings
 
 
@@ -13,14 +13,14 @@ async def lifespan(app: FastAPI):
     settings = get_settings()
     uri = settings.MONGODB_URI
     db_name = settings.MONGODB_DATABASE
-    client = MongoClient(uri)
+    client = AsyncMongoClient(uri)
     db = client[db_name]
     app.mongo_conn = client
     app.db = db
 
     yield
 
-    app.mongo_conn.close()
+    await client.close()
     app.db = None
     app.mongo_conn = None
 

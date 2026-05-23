@@ -162,4 +162,5 @@ cython_debug/
 # Uploaded user files (keep other assets tracked)
 src/assets/files/
 
-docker
+docker/.env
+docker/mongodb

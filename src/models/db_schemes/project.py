@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field,field_validator
 
 
 class Project(BaseModel):
-    _id:Optional[ObjectId] 
+    id: Optional[ObjectId] = Field(default=None, alias="_id")
     project_id: str =Field(...,min_length=1)
 
     @field_validator('project_id')

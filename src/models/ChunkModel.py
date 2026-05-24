@@ -15,6 +15,17 @@ class ChunkModel(BaseDataModel):
         super().__init__(db)
         self.collection = db[DataBaseEnum.COLLECTION_DATA_CHUNKS_NAME.value]
 
+    @classmethod
+    async def create_instance(cls, db: AsyncDatabase):
+        instance = cls(db)
+        await instance.init_collection()
+        return instance
+
+    async def init_collection(self):
+        indexes = DataChunk.get_indexes()
+        for index in indexes:
+            await self.collection.create_index(index["key"], name=index["name"], unique=index["unique"])
+
     async def create_chunk(self, chunk: DataChunk):
         result = await self.collection.insert_one(chunk.model_dump(exclude_none=True))
         chunk.id = result.inserted_id

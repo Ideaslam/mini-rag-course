@@ -1,4 +1,4 @@
-import datetime
+
 from typing import Optional
 from bson import ObjectId
 from pydantic import BaseModel, Field,field_validator
@@ -13,3 +13,16 @@ class DataChunk(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+
+
+    @classmethod
+    def get_indexes(cls):
+        return [
+            {
+                "key": [
+                    ("chunk_project_id", 1),
+                ],
+                "name": "idx_chunk_project_id",
+                "unique": True,
+            }
+        ]   

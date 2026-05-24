@@ -1,4 +1,5 @@
 from pymongo.asynchronous.database import AsyncDatabase
+from pymongo.asynchronous.mongo_client import AsyncMongoClient
 
 from .db_schemes.project import Project
 
@@ -10,6 +11,17 @@ class ProjectModel(BaseDataModel):
     def __init__(self, db: AsyncDatabase):
         super().__init__(db)
         self.collection = db[DataBaseEnum.COLLECTION_PROJECTS_NAME.value]
+
+    @classmethod
+    async def create_instance(cls, db_client: AsyncMongoClient):
+        instance = cls(db_client)
+        await instance.init_collection()
+        return instance
+
+    async def init_collection(self):
+        indexes = Project.get_indexes()
+        for index in indexes:
+            await self.collection.create_index(index["key"], name=index["name"], unique=index["unique"])
 
     async def create_project(self, project: Project):
         result = await self.collection.insert_one(project.model_dump(exclude_none=True))

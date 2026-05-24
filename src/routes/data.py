@@ -26,7 +26,7 @@ async def upload_data(
 ):
     try:
 
-        project_model = ProjectModel(request.app.db)
+        project_model = await ProjectModel.create_instance(request.app.db)
         print("project_model",project_model)
 
         project = await project_model.get_project_or_create_one(project_id)
@@ -68,9 +68,8 @@ async def process_endpoint(req: Request, project_id: str, process_request: Proce
     overlap_size = process_request.overlap_size
     do_reset = process_request.do_reset
 
-    chunk_model = ChunkModel(req.app.db)
-
-    
+    chunk_model = await ChunkModel.create_instance(req.app.db)
+    project_model = await ProjectModel.create_instance(req.app.db) 
 
 
     process_controller = ProcessController(project_id)
@@ -78,7 +77,7 @@ async def process_endpoint(req: Request, project_id: str, process_request: Proce
     file_chunks = process_controller.process_file_content(
         file_content=file_content, chunk_size=chunk_size, overlap_size=overlap_size
     )
-    project_model = ProjectModel(req.app.db)
+    
     project = await project_model.get_project_or_create_one(project_id)
     if file_chunks is None:
         return JSONResponse(

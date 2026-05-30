@@ -10,6 +10,7 @@ class DataChunk(BaseModel):
     metadata: dict
     order: int = Field(...,ge=0)
     project_id:ObjectId
+    asset_id:ObjectId
 
     class Config:
         arbitrary_types_allowed = True
@@ -20,9 +21,9 @@ class DataChunk(BaseModel):
         return [
             {
                 "key": [
-                    ("chunk_project_id", 1),
+                    ("project_id", 1),
                 ],
-                "name": "idx_chunk_project_id",
-                "unique": True,
+                "name": "idx_project_id",
+                "unique": False,
             }
         ]   
